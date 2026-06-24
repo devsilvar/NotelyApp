@@ -8,6 +8,7 @@ const helmet = require("helmet")
 const cors = require("cors")
 const { apiLimiter } = require("./config/rateLimit")
 const validateEnv = require("./config/validateEnv")
+const mongoose = require('mongoose')
 
 validateEnv()
 const app = express()
@@ -53,7 +54,7 @@ app.get("/health" , async(reaq, res, next)=>{
 
  const statusCode = healthData.status  === 'healthy' ? 200
  : 500
-res.statusCode(statusCode).json(healthData)
+res.status(statusCode).json(healthData)
 }
 )
 
