@@ -37,27 +37,12 @@ app.use(express.urlencoded({extended:true , limit:'20kb'}))
 app.use("/api/" , apiLimiter)
 
 
-app.get("/health" , async(reaq, res, next)=>{
-    const dbStatus = mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
-
- const healthData = {
-    status: dbStatus === "connected" ? "healthy" :"unhealthy",
-    timeStamp: new Date().toISOString(),
-    uptime: `${Math.floor(process.uptime())} seconds`,
-    enviroment : process.env.NODE_ENV,
-    dataBase: dbStatus ,
-    memory: {
-        used: `${Math.round(process.memoryUsage()).heapUsed / 1024 / 1024} MB`,
-        total: `${Math.round(process.memoryUsage()).heapTotal / 1024 / 1024} MB`
-    }
- }
-
- const statusCode = healthData.status  === 'healthy' ? 200
- : 500
-res.status(statusCode).json(healthData)
-}
-)
-
+app.get("/health", (req, res) => {
+  return res.status(200).json({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+  });
+});
 app.use("/api/auth" , userRoutes)
 app.use("/api/note" , noteRoutes)
 
