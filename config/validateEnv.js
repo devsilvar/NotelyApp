@@ -2,7 +2,6 @@
 const AppError = require("../utils/AppError")
 const validateEnv = () =>{
     const required = [
-    'PORT',
     'MONGO_URI',
     'NODE_ENV', 
     'JWT_SECRET', 
